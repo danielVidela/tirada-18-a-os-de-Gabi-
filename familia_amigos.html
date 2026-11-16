@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Familia y Amigos — Daniel Videla Fotografía</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tooplate-2167-orbital-style.css">
+
+<style>
+  /* === PRELOADER NEÓN 4 SEGUNDOS + PROTECCIÓN MÓVIL IPHONE 16 === */
+  #dv-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: radial-gradient(circle at center, #0d081d 0%, #05030a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  #dv-preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .dv-loader-rings {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .dv-ring-outer {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #00f5ff;
+    border-right-color: #ff007f;
+    box-shadow: 0 0 25px rgba(0, 245, 255, 0.35), inset 0 0 20px rgba(255, 0, 127, 0.25);
+    animation: dvSpinRight 1.8s linear infinite;
+  }
+  .dv-ring-inner {
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 2px dashed rgba(168, 85, 247, 0.85);
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.4);
+    animation: dvSpinLeft 2.6s linear infinite;
+  }
+  .dv-camera-icon {
+    width: 68px;
+    height: 68px;
+    z-index: 2;
+    filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.8)) drop-shadow(0 0 22px rgba(255, 0, 127, 0.5));
+    animation: dvCamPulse 1.5s ease-in-out infinite;
+  }
+  .dv-flash-dot { animation: dvFlashBlink 1.5s infinite; }
+  .dv-loader-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1rem, 4.5vw, 1.35rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #00f5ff, #c084fc, #ff007f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+    text-align: center;
+    max-width: 100%;
+  }
+  .dv-loader-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.7rem, 3vw, 0.78rem);
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+  .dv-progress-track {
+    width: min(240px, 80vw);
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .dv-progress-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #00f5ff, #a855f7, #ff007f);
+    box-shadow: 0 0 14px #00f5ff;
+    animation: dvFillBar 4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes dvSpinRight { to { transform: rotate(360deg); } }
+  @keyframes dvSpinLeft { to { transform: rotate(-360deg); } }
+  @keyframes dvCamPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+  @keyframes dvFlashBlink { 0%, 70%, 100% { opacity: 0.25; fill: #00f5ff; } 80% { opacity: 1; fill: #ffffff; } }
+  @keyframes dvFillBar { 0% { width: 0%; } 100% { width: 100%; } }
+
+  /* === CORRECCIÓN DE DESBORDE EN MÓVIL (IPHONE 16) === */
+  body, html {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .hero-text h1, .section-head h2 {
+    font-size: clamp(1.6rem, 6.5vw, 2.8rem) !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
+  .hero-text p, .section-head p {
+    font-size: clamp(0.9rem, 3.8vw, 1.05rem) !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
+  .photos-section {
+    padding: 6rem 1rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 3rem;
+    width: 100%;
+  }
+
+  .photo-card {
+    background: rgba(18, 14, 35, 0.7);
+    border: 1px solid rgba(0, 245, 255, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+  .photo-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 245, 255, 0.6);
+    box-shadow: 0 12px 35px rgba(0, 245, 255, 0.2);
+  }
+  .photo-thumb-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .photo-thumb-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .photo-card:hover .photo-thumb-container img {
+    transform: scale(1.06);
+  }
+  .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5, 3, 10, 0.85) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+  @media (hover: none) {
+    .photo-overlay { opacity: 1; }
+  }
+  .photo-card:hover .photo-overlay {
+    opacity: 1;
+  }
+  .photo-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .photo-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #00f5ff;
+    letter-spacing: 0.1em;
+  }
+  .btn-download {
+    background: linear-gradient(135deg, #00f5ff, #a855f7);
+    color: #05030a;
+    border: none;
+    padding: 6px 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.4);
+  }
+
+  /* === LIGHTBOX MODAL === */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(3, 2, 6, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  #lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  #lightbox img {
+    max-width: 92vw;
+    max-height: 78vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 40px rgba(0, 245, 255, 0.3);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+  }
+  .lightbox-close, .lightbox-prev, .lightbox-next {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 245, 255, 0.4);
+    color: #00f5ff;
+    font-size: 1.2rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .lightbox-close { top: 20px; right: 20px; }
+  .lightbox-prev { left: 15px; top: 50%; transform: translateY(-50%); }
+  .lightbox-next { right: 15px; top: 50%; transform: translateY(-50%); }
+  .lightbox-footer {
+    position: absolute;
+    bottom: 20px;
+  }
+</style>
+</head>
+
+<body class="visuals-on">
+
+<!-- PRELOADER 4 SEGUNDOS -->
+<div id="dv-preloader" role="status" aria-label="Cargando Familia y Amigos">
+  <div class="dv-loader-rings">
+    <div class="dv-ring-outer"></div>
+    <div class="dv-ring-inner"></div>
+    <svg class="dv-camera-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 21C10 18.7909 11.7909 17 14 17H20.5L23.5 12.5C24.2 11.5 25.3 11 26.5 11H37.5C38.7 11 39.8 11.5 40.5 12.5L43.5 17H50C52.2091 17 54 18.7909 54 21V47C54 49.2091 52.2091 51 50 51H14C11.7909 51 10 49.2091 10 47V21Z" stroke="url(#neonCamGrad)" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="32" cy="34" r="11.5" stroke="#00f5ff" stroke-width="2.5"/>
+      <circle cx="32" cy="34" r="6" stroke="#ff007f" stroke-width="2"/>
+      <circle class="dv-flash-dot" cx="47" cy="23" r="2.5" fill="#00f5ff"/>
+      <defs>
+        <linearGradient id="neonCamGrad" x1="10" y1="11" x2="54" y2="51" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00f5ff"/>
+          <stop offset="0.5" stop-color="#c084fc"/>
+          <stop offset="1" stop-color="#ff007f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <div class="dv-loader-brand">Daniel Videla Fotografía</div>
+  <div class="dv-loader-sub">Familia y Amigos • Gabi</div>
+  <div class="dv-progress-track">
+    <div class="dv-progress-bar"></div>
+  </div>
+</div>
+
+<div class="aura"></div>
+<div class="stars"></div>
+
+<nav class="nav">
+  <div class="logo"><a href="index.html" class="logo">DANIEL VIDELA <span>// FOTOGRAFÍA</span></a></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="sesion.html">Sesión</a></li>
+    <li><a href="tirada.html">Tirada</a></li>
+    <li><a href="corte.html">Corte</a></li>
+  </ul>
+  <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu">
+  <a href="index.html">Inicio</a>
+  <a href="sesion.html">Sesión Principal</a>
+  <a href="tirada.html">Tirada</a>
+  <a href="corte.html">Corte</a>
+  <a href="familia_amigos.html">Familia y Amigos</a>
+  <a href="torta.html">Torta</a>
+  <a href="cena.html">Cena</a>
+</div>
+
+<!-- HERO CON CARRUSEL 3D ORBITAL -->
+<header class="hero">
+  <div class="stage">
+    <div class="parallax">
+      <div class="ring-tilt">
+        <div class="ring" id="ring">
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9447.JPG" alt="Familia 01" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">01</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9451.JPG" alt="Familia 02" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">02</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9458.JPG" alt="Familia 03" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">03</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9464.JPG" alt="Familia 04" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">04</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9471.JPG" alt="Familia 05" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">05</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9477.JPG" alt="Familia 06" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">06</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9483.JPG" alt="Familia 07" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">07</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9488.JPG" alt="Familia 08" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">08</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9493.JPG" alt="Familia 09" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">09</span>VÍNCULOS</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="familia_amigos/IMG_9498.JPG" alt="Familia 10" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">10</span>VÍNCULOS</div></div></div>
+        </div>
+      </div>
+      <div class="hero-text">
+        <div class="eyebrow">DANIEL VIDELA FOTOGRAFÍA</div>
+        <h1>FAMILIA Y AMIGOS</h1>
+        <p>Los abrazos más sinceros, las risas compartidas y la compañía de quienes estuvieron ahí.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- GRILLA FIJA CON LAS 38 FOTOS DE FAMILIA_AMIGOS -->
+<section class="photos-section" id="galeria">
+  <div class="section-head reveal">
+    <div class="eyebrow">// GALERÍA COMPLETA</div>
+    <h2>Encuentros y Afectos</h2>
+    <p>Hacé clic en cualquier foto para abrirla en pantalla completa o utilizá el botón para descargarla directamente.</p>
+  </div>
+
+  <div class="photos-grid" id="photosGrid">
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(0)"><img src="familia_amigos/IMG_9447.JPG" alt="Familia 1" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 01</span><a href="familia_amigos/IMG_9447.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(1)"><img src="familia_amigos/IMG_9448.JPG" alt="Familia 2" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 02</span><a href="familia_amigos/IMG_9448.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(2)"><img src="familia_amigos/IMG_9449.JPG" alt="Familia 3" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 03</span><a href="familia_amigos/IMG_9449.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(3)"><img src="familia_amigos/IMG_9451.JPG" alt="Familia 4" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 04</span><a href="familia_amigos/IMG_9451.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(4)"><img src="familia_amigos/IMG_9452.JPG" alt="Familia 5" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 05</span><a href="familia_amigos/IMG_9452.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(5)"><img src="familia_amigos/IMG_9453.JPG" alt="Familia 6" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 06</span><a href="familia_amigos/IMG_9453.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(6)"><img src="familia_amigos/IMG_9454.JPG" alt="Familia 7" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 07</span><a href="familia_amigos/IMG_9454.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(7)"><img src="familia_amigos/IMG_9458.JPG" alt="Familia 8" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 08</span><a href="familia_amigos/IMG_9458.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(8)"><img src="familia_amigos/IMG_9461.JPG" alt="Familia 9" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 09</span><a href="familia_amigos/IMG_9461.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(9)"><img src="familia_amigos/IMG_9463.JPG" alt="Familia 10" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 10</span><a href="familia_amigos/IMG_9463.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(10)"><img src="familia_amigos/IMG_9464.JPG" alt="Familia 11" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 11</span><a href="familia_amigos/IMG_9464.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(11)"><img src="familia_amigos/IMG_9465.JPG" alt="Familia 12" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 12</span><a href="familia_amigos/IMG_9465.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(12)"><img src="familia_amigos/IMG_9467.JPG" alt="Familia 13" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 13</span><a href="familia_amigos/IMG_9467.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(13)"><img src="familia_amigos/IMG_9468.JPG" alt="Familia 14" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 14</span><a href="familia_amigos/IMG_9468.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(14)"><img src="familia_amigos/IMG_9470.JPG" alt="Familia 15" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 15</span><a href="familia_amigos/IMG_9470.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(15)"><img src="familia_amigos/IMG_9471.JPG" alt="Familia 16" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 16</span><a href="familia_amigos/IMG_9471.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(16)"><img src="familia_amigos/IMG_9473.JPG" alt="Familia 17" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 17</span><a href="familia_amigos/IMG_9473.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(17)"><img src="familia_amigos/IMG_9474.JPG" alt="Familia 18" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 18</span><a href="familia_amigos/IMG_9474.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(18)"><img src="familia_amigos/IMG_9475.JPG" alt="Familia 19" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 19</span><a href="familia_amigos/IMG_9475.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(19)"><img src="familia_amigos/IMG_9477.JPG" alt="Familia 20" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 20</span><a href="familia_amigos/IMG_9477.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(20)"><img src="familia_amigos/IMG_9479.JPG" alt="Familia 21" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 21</span><a href="familia_amigos/IMG_9479.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(21)"><img src="familia_amigos/IMG_9482.JPG" alt="Familia 22" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 22</span><a href="familia_amigos/IMG_9482.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(22)"><img src="familia_amigos/IMG_9483.JPG" alt="Familia 23" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 23</span><a href="familia_amigos/IMG_9483.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(23)"><img src="familia_amigos/IMG_9484.JPG" alt="Familia 24" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 24</span><a href="familia_amigos/IMG_9484.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(24)"><img src="familia_amigos/IMG_9485.JPG" alt="Familia 25" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 25</span><a href="familia_amigos/IMG_9485.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(25)"><img src="familia_amigos/IMG_9486.JPG" alt="Familia 26" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 26</span><a href="familia_amigos/IMG_9486.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(26)"><img src="familia_amigos/IMG_9487.JPG" alt="Familia 27" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 27</span><a href="familia_amigos/IMG_9487.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(27)"><img src="familia_amigos/IMG_9488.JPG" alt="Familia 28" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 28</span><a href="familia_amigos/IMG_9488.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(28)"><img src="familia_amigos/IMG_9489.JPG" alt="Familia 29" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 29</span><a href="familia_amigos/IMG_9489.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(29)"><img src="familia_amigos/IMG_9490.JPG" alt="Familia 30" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 30</span><a href="familia_amigos/IMG_9490.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(30)"><img src="familia_amigos/IMG_9491.JPG" alt="Familia 31" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 31</span><a href="familia_amigos/IMG_9491.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(31)"><img src="familia_amigos/IMG_9492.JPG" alt="Familia 32" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 32</span><a href="familia_amigos/IMG_9492.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(32)"><img src="familia_amigos/IMG_9493.JPG" alt="Familia 33" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 33</span><a href="familia_amigos/IMG_9493.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(33)"><img src="familia_amigos/IMG_9494.JPG" alt="Familia 34" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 34</span><a href="familia_amigos/IMG_9494.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(34)"><img src="familia_amigos/IMG_9495.JPG" alt="Familia 35" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 35</span><a href="familia_amigos/IMG_9495.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(35)"><img src="familia_amigos/IMG_9496.JPG" alt="Familia 36" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 36</span><a href="familia_amigos/IMG_9496.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(36)"><img src="familia_amigos/IMG_9497.JPG" alt="Familia 37" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 37</span><a href="familia_amigos/IMG_9497.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(37)"><img src="familia_amigos/IMG_9498.JPG" alt="Familia 38" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">VÍNCULOS // 38</span><a href="familia_amigos/IMG_9498.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox">
+  <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+  <button class="lightbox-prev" aria-label="Anterior">&#10094;</button>
+  <img id="lightboxImg" src="" alt="Ampliada">
+  <button class="lightbox-next" aria-label="Siguiente">&#10095;</button>
+  <div class="lightbox-footer">
+    <a id="lightboxDownload" href="" download class="btn-download">DESCARGAR FOTO</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="logo"><a href="index.html" class="logo">DANIEL VIDELA <span>// FOTOGRAFÍA</span></a></div>
+  <div class="credit">Familia y Amigos • Cumpleaños de Gabi</div>
+</footer>
+
+<script src="tooplate-2167-orbital-script.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    const preloader = document.getElementById('dv-preloader');
+    if (preloader) {
+      setTimeout(() => {
+        preloader.classList.add('is-hidden');
+        setTimeout(() => preloader.remove(), 650);
+      }, 4000);
+    }
+  });
+
+  const photoFiles = [
+    "IMG_9447.JPG", "IMG_9448.JPG", "IMG_9449.JPG", "IMG_9451.JPG", "IMG_9452.JPG",
+    "IMG_9453.JPG", "IMG_9454.JPG", "IMG_9458.JPG", "IMG_9461.JPG", "IMG_9463.JPG",
+    "IMG_9464.JPG", "IMG_9465.JPG", "IMG_9467.JPG", "IMG_9468.JPG", "IMG_9470.JPG",
+    "IMG_9471.JPG", "IMG_9473.JPG", "IMG_9474.JPG", "IMG_9475.JPG", "IMG_9477.JPG",
+    "IMG_9479.JPG", "IMG_9482.JPG", "IMG_9483.JPG", "IMG_9484.JPG", "IMG_9485.JPG",
+    "IMG_9486.JPG", "IMG_9487.JPG", "IMG_9488.JPG", "IMG_9489.JPG", "IMG_9490.JPG",
+    "IMG_9491.JPG", "IMG_9492.JPG", "IMG_9493.JPG", "IMG_9494.JPG", "IMG_9495.JPG",
+    "IMG_9496.JPG", "IMG_9497.JPG", "IMG_9498.JPG"
+  ];
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxDownload = document.getElementById('lightboxDownload');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const prevBtn = document.querySelector('.lightbox-prev');
+  const nextBtn = document.querySelector('.lightbox-next');
+
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightboxImage();
+    lightbox.classList.add('is-open');
+  }
+
+  function updateLightboxImage() {
+    const filename = photoFiles[currentIndex];
+    const path = `familia_amigos/${filename}`;
+    lightboxImg.src = path;
+    lightboxDownload.href = path;
+    lightboxDownload.setAttribute('download', filename);
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + photoFiles.length) % photoFiles.length;
+    updateLightboxImage();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % photoFiles.length;
+    updateLightboxImage();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevBtn.click();
+    if (e.key === 'ArrowRight') nextBtn.click();
+  });
+</script>
+
+</body>
+</html>

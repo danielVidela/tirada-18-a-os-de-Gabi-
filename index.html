@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título y SEO para Google -->
+  <title>Cumpleaños 18 Años de Gabi | Daniel Videla - Fotografía de Moda</title>
+  <meta name="description" content="Producción fotográfica editorial por los 18 años de Gabi. Fotografía de Moda por Daniel Videla.">
+  <meta name="author" content="Daniel Videla - Fotografía de Moda">
+  <meta name="keywords" content="Cumpleaños 18 años de Gabi, fotografía de moda, book 18 años, Daniel Videla, sesión editorial">
+
+  <!-- Open Graph (Para que aparezca la vista previa con foto en WhatsApp, Facebook e Instagram) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cumpleaños 18 Años de Gabi — Daniel Videla Fotografía de Moda">
+  <meta property="og:description" content="Sesión editorial por los 18 años de Gabi. Estilo, luz y actitud capturados por Daniel Videla Fotografía de Moda.">
+  <meta property="og:image" content="https://i.ibb.co/Jjj85JFS/IMG-9430.jpg">
+  <meta property="og:image:alt" content="Sesión fotográfica de 18 años de Gabi por Daniel Videla">
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cumpleaños 18 Años de Gabi | Daniel Videla">
+  <meta name="twitter:description" content="Producción fotográfica editorial por los 18 años de Gabi. Daniel Videla Fotografía de Moda.">
+  <meta name="twitter:image" content="https://i.ibb.co/Jjj85JFS/IMG-9430.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tooplate-2167-orbital-style.css">
+
+<style>
+  /* === PRELOADER NEÓN 4 SEGUNDOS + PROTECCIÓN MÓVIL IPHONE 16 === */
+  #dv-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: radial-gradient(circle at center, #0d081d 0%, #05030a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  #dv-preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .dv-loader-rings {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .dv-ring-outer {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #00f5ff;
+    border-right-color: #ff007f;
+    box-shadow: 0 0 25px rgba(0, 245, 255, 0.35), inset 0 0 20px rgba(255, 0, 127, 0.25);
+    animation: dvSpinRight 1.8s linear infinite;
+  }
+
+  .dv-ring-inner {
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 2px dashed rgba(168, 85, 247, 0.85);
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.4);
+    animation: dvSpinLeft 2.6s linear infinite;
+  }
+
+  .dv-camera-icon {
+    width: 68px;
+    height: 68px;
+    z-index: 2;
+    filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.8)) drop-shadow(0 0 22px rgba(255, 0, 127, 0.5));
+    animation: dvCamPulse 1.5s ease-in-out infinite;
+  }
+
+  .dv-flash-dot {
+    animation: dvFlashBlink 1.5s infinite;
+  }
+
+  .dv-loader-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1rem, 4.5vw, 1.35rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #00f5ff, #c084fc, #ff007f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .dv-loader-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.7rem, 3vw, 0.78rem);
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+
+  .dv-progress-track {
+    width: min(240px, 80vw);
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: 0 0 12px rgba(0, 245, 255, 0.2);
+  }
+
+  .dv-progress-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #00f5ff, #a855f7, #ff007f);
+    box-shadow: 0 0 14px #00f5ff;
+    /* Duración exacta de 4 segundos */
+    animation: dvFillBar 4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes dvSpinRight { to { transform: rotate(360deg); } }
+  @keyframes dvSpinLeft { to { transform: rotate(-360deg); } }
+  @keyframes dvCamPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+  @keyframes dvFlashBlink { 0%, 70%, 100% { opacity: 0.25; fill: #00f5ff; } 80% { opacity: 1; fill: #ffffff; } }
+  @keyframes dvFillBar { 0% { width: 0%; } 100% { width: 100%; } }
+
+  /* === CORRECCIÓN DE DESBORDE DE TEXTO EN MOBILE (IPHONE 16 - 393px) === */
+  body, html {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .hero-text h1, .section-head h2, .cta h2 {
+    font-size: clamp(1.6rem, 6.5vw, 2.8rem) !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+  }
+
+  .hero-text p, .section-head p, .cta p, .feature p {
+    font-size: clamp(0.9rem, 3.8vw, 1.05rem) !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
+  .hero, .section, .cta, footer {
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .galerias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 2.5rem;
+    width: 100%;
+  }
+
+  .galeria-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    box-sizing: border-box;
+    word-break: break-word;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+    cursor: pointer;
+  }
+
+  .galeria-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 245, 255, 0.55);
+    box-shadow: 0 16px 40px rgba(0, 245, 255, 0.14), 0 0 24px rgba(168, 85, 247, 0.16);
+  }
+
+  .galeria-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #00f5ff;
+    transition: gap 0.25s ease, color 0.25s ease;
+  }
+
+  .galeria-card:hover .galeria-card-cta {
+    gap: 13px;
+    color: #ff4da6;
+  }
+</style>
+</head>
+
+<body class="visuals-on">
+
+<!-- PANTALLA DE CARGA NEÓN (4 SEGUNDOS) -->
+<div id="dv-preloader" role="status" aria-label="Cargando galería de Daniel Videla Fotografía">
+  <div class="dv-loader-rings">
+    <div class="dv-ring-outer"></div>
+    <div class="dv-ring-inner"></div>
+    <svg class="dv-camera-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 21C10 18.7909 11.7909 17 14 17H20.5L23.5 12.5C24.2 11.5 25.3 11 26.5 11H37.5C38.7 11 39.8 11.5 40.5 12.5L43.5 17H50C52.2091 17 54 18.7909 54 21V47C54 49.2091 52.2091 51 50 51H14C11.7909 51 10 49.2091 10 47V21Z" stroke="url(#neonCamGrad)" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="32" cy="34" r="11.5" stroke="#00f5ff" stroke-width="2.5"/>
+      <circle cx="32" cy="34" r="6" stroke="#ff007f" stroke-width="2"/>
+      <circle class="dv-flash-dot" cx="47" cy="23" r="2.5" fill="#00f5ff"/>
+      <defs>
+        <linearGradient id="neonCamGrad" x1="10" y1="11" x2="54" y2="51" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00f5ff"/>
+          <stop offset="0.5" stop-color="#c084fc"/>
+          <stop offset="1" stop-color="#ff007f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <div class="dv-loader-brand">Daniel Videla Fotografía</div>
+  <div class="dv-loader-sub">Enfocando recuerdos • Gabi</div>
+  <div class="dv-progress-track">
+    <div class="dv-progress-bar"></div>
+  </div>
+</div>
+
+<div class="aura"></div>
+<div class="stars"></div>
+
+<nav class="nav">
+  <div class="logo"><a href="index.html" class="logo">DANIEL VIDELA <span>// FOTOGRAFÍA</span></a></div>
+  <ul class="nav-links">
+    <li><a href="#galerias">Galerías</a></li>
+    <li><a href="sesion.html">Sesión</a></li>
+    <li><a href="tirada.html">Tirada</a></li>
+    <li><a href="#info">Créditos</a></li>
+  </ul>
+  <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu">
+  <a href="#galerias">Galerías</a>
+  <a href="sesion.html">Sesión</a>
+  <a href="tirada.html">Tirada</a>
+  <a href="corte.html">Corte</a>
+  <a href="familia_amigos.html">Familia y Amigos</a>
+  <a href="torta.html">Torta</a>
+  <a href="cena.html">Cena</a>
+</div>
+
+<header class="hero">
+  <div class="stage">
+    <div class="parallax">
+      <div class="ring-tilt">
+        <div class="ring" id="ring">
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">01</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 01</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9430.JPG" alt="Cumpleaños de Gabi - Foto 01" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">01</span>GABI // 01</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">02</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 02</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9439.JPG" alt="Cumpleaños de Gabi - Foto 02" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">02</span>GABI // 02</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">03</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 03</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9472.JPG" alt="Cumpleaños de Gabi - Foto 03" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">03</span>GABI // 03</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">04</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 04</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9480.JPG" alt="Cumpleaños de Gabi - Foto 04" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">04</span>GABI // 04</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">05</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 05</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9499.JPG" alt="Cumpleaños de Gabi - Foto 05" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">05</span>GABI // 05</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">06</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 06</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9502.JPG" alt="Cumpleaños de Gabi - Foto 06" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">06</span>GABI // 06</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">07</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 07</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9511.JPG" alt="Cumpleaños de Gabi - Foto 07" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">07</span>GABI // 07</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">08</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 08</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9512.JPG" alt="Cumpleaños de Gabi - Foto 08" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">08</span>GABI // 08</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">09</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 09</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9517.JPG" alt="Cumpleaños de Gabi - Foto 09" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">09</span>GABI // 09</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-face panel-face--text">
+              <div class="p-num">10</div>
+              <div>
+                <div class="p-label">GABI</div>
+                <div class="p-meta">DESTACADA 10</div>
+              </div>
+            </div>
+            <div class="panel-face panel-face--image">
+              <img src="home/IMG_9519.JPG" alt="Cumpleaños de Gabi - Foto 10" loading="lazy">
+              <div class="panel-scrim"></div>
+              <div class="panel-cap"><span class="p-num">10</span>GABI // 10</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="hero-text">
+        <div class="eyebrow">DANIEL VIDELA FOTOGRAFÍA</div>
+        <h1>CUMPLEAÑOS DE GABI</h1>
+        <p>Cada instante, cada sonrisa y cada celebración capturados en alta definición. Explorá las 6 galerías del festejo.</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-controls">
+    <div class="ctrl">
+      <span class="ctrl-label">FOTOS</span>
+      <button class="switch" id="visualsSwitch" role="switch" aria-checked="true" aria-label="Alternar visualización de fotos">
+        <span class="knob"></span>
+      </button>
+    </div>
+    <div class="ctrl">
+      <span class="ctrl-label">ZOOM</span>
+      <button class="switch" id="zoomSwitch" role="switch" aria-checked="false" aria-label="Ampliar carrusel">
+        <span class="knob"></span>
+      </button>
+    </div>
+    <div class="ctrl">
+      <span class="ctrl-label">ESPACIO</span>
+      <div class="spacing" role="group" aria-label="Espaciado del anillo">
+        <button class="spacing-step" data-space="0" aria-label="Espaciado compacto"><i></i></button>
+        <button class="spacing-step is-active" data-space="1" aria-label="Espaciado normal"><i></i></button>
+        <button class="spacing-step" data-space="2" aria-label="Espaciado amplio"><i></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <span>EXPLORAR</span>
+    <div class="line"></div>
+  </div>
+</header>
+
+<section class="section" id="galerias">
+  <div class="section-head reveal">
+    <div class="eyebrow">// COLECCIÓN COMPLETA</div>
+    <h2>6 Momentos, 6 Galerías</h2>
+    <p>Seleccioná cualquiera de las temáticas del cumpleaños de Gabi para recorrer el carrusel completo, ver las fotos en pantalla completa y descargarlas en máxima calidad.</p>
+  </div>
+
+  <div class="features galerias-grid">
+    <!-- TARJETA 1: SESIÓN -->
+    <a href="sesion.html" class="feature galeria-card reveal">
+      <div>
+        <div class="f-index">01 // RETRATOS</div>
+        <h3>Sesión Principal</h3>
+        <p>Los retratos protagonistas de Gabi: estilo, actitud y luz propia en una producción pensada para destacar cada detalle.</p>
+      </div>
+      <span class="galeria-card-cta">Ver galería <span>&rarr;</span></span>
+    </a>
+
+    <!-- TARJETA 2: TIRADA -->
+    <a href="tirada.html" class="feature galeria-card reveal">
+      <div>
+        <div class="f-index">02 // FESTEJO</div>
+        <h3>La Tirada</h3>
+        <p>La euforia, el color y la espontaneidad del tradicional festejo capturados segundo a segundo sin filtros.</p>
+      </div>
+      <span class="galeria-card-cta">Ver galería <span>&rarr;</span></span>
+    </a>
+
+    <!-- TARJETA 3: CORTE -->
+    <a href="corte.html" class="feature galeria-card reveal">
+      <div>
+        <div class="f-index">03 // RITUAL</div>
+        <h3>El Corte</h3>
+        <p>El cambio de look, las risas cómplices y ese instante único que marca un antes y un después en la celebración.</p>
+      </div>
+      <span class="galeria-card-cta">Ver galería <span>&rarr;</span></span>
+    </a>
+
+    <!-- TARJETA 4: FAMILIA Y AMIGOS -->
+    <a href="familia_amigos.html" class="feature galeria-card reveal">
+      <div>
+        <div class="f-index">04 // ENCUENTRO</div>
+        <h3>Familia y Amigos</h3>
+        <p>Los abrazos más sinceros, las poses grupales y la compañía de quienes estuvieron ahí para celebrar junto a Gabi.</p>
+      </div>
+      <span class="galeria-card-cta">Ver galería <span>&rarr;</span></span>
+    </a>
+
+    <!-- TARJETA 5: TORTA -->
+    <a href="torta.html" class="feature galeria-card reveal">
+      <div>
+        <div class="f-index">05 // DESEOS</div>
+        <h3>La Torta</h3>
+        <p>Las velas encendidas, el canto del feliz cumpleaños y el momento exacto de pedir los mejores deseos.</p>
+      </div>
+      <span class="galeria-card-cta">Ver galería <span>&rarr;</span></span>
+    </a>
+
+    <!-- TARJETA 6: CENA -->
+    <a href="cena.html" class="feature galeria-card reveal">
+      <div>
+        <div class="f-index">06 // VELADA</div>
+        <h3>La Cena</h3>
+        <p>La mesa compartida, las charlas, los brindis y el clima cálido del cierre de una noche inolvidable.</p>
+      </div>
+      <span class="galeria-card-cta">Ver galería <span>&rarr;</span></span>
+    </a>
+  </div>
+</section>
+
+<section class="cta" id="info">
+  <div class="reveal">
+    <h2>Recuerdos para toda la vida</h2>
+    <p>Cobertura fotográfica realizada por Daniel Videla Fotografía. Todas las imágenes están listas para visualizar y descargar.</p>
+    <a href="sesion.html" class="btn">EMPEZAR POR LA SESIÓN</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="logo"><a href="index.html" class="logo">DANIEL VIDELA <span>// FOTOGRAFÍA</span></a></div>
+  <div class="credit">Cobertura Fotográfica • Cumpleaños de Gabi</div>
+</footer>
+
+<script src="tooplate-2167-orbital-script.js"></script>
+<script>
+  // Ocultar el preloader exactamente a los 4 segundos de cargar la página
+  window.addEventListener('load', () => {
+    const preloader = document.getElementById('dv-preloader');
+    if (preloader) {
+      setTimeout(() => {
+        preloader.classList.add('is-hidden');
+        setTimeout(() => preloader.remove(), 650);
+      }, 4000);
+    }
+  });
+</script>
+
+</body>
+</html>

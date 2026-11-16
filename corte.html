@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Corte — Daniel Videla Fotografía</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tooplate-2167-orbital-style.css">
+
+<style>
+  /* === PRELOADER NEÓN 4 SEGUNDOS + PROTECCIÓN MÓVIL IPHONE 16 === */
+  #dv-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: radial-gradient(circle at center, #0d081d 0%, #05030a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  #dv-preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .dv-loader-rings {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .dv-ring-outer {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #00f5ff;
+    border-right-color: #ff007f;
+    box-shadow: 0 0 25px rgba(0, 245, 255, 0.35), inset 0 0 20px rgba(255, 0, 127, 0.25);
+    animation: dvSpinRight 1.8s linear infinite;
+  }
+  .dv-ring-inner {
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 2px dashed rgba(168, 85, 247, 0.85);
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.4);
+    animation: dvSpinLeft 2.6s linear infinite;
+  }
+  .dv-camera-icon {
+    width: 68px;
+    height: 68px;
+    z-index: 2;
+    filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.8)) drop-shadow(0 0 22px rgba(255, 0, 127, 0.5));
+    animation: dvCamPulse 1.5s ease-in-out infinite;
+  }
+  .dv-flash-dot { animation: dvFlashBlink 1.5s infinite; }
+  .dv-loader-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1rem, 4.5vw, 1.35rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #00f5ff, #c084fc, #ff007f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+    text-align: center;
+    max-width: 100%;
+  }
+  .dv-loader-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.7rem, 3vw, 0.78rem);
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+  .dv-progress-track {
+    width: min(240px, 80vw);
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .dv-progress-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #00f5ff, #a855f7, #ff007f);
+    box-shadow: 0 0 14px #00f5ff;
+    animation: dvFillBar 4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes dvSpinRight { to { transform: rotate(360deg); } }
+  @keyframes dvSpinLeft { to { transform: rotate(-360deg); } }
+  @keyframes dvCamPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+  @keyframes dvFlashBlink { 0%, 70%, 100% { opacity: 0.25; fill: #00f5ff; } 80% { opacity: 1; fill: #ffffff; } }
+  @keyframes dvFillBar { 0% { width: 0%; } 100% { width: 100%; } }
+
+  /* === CORRECCIÓN DE DESBORDE EN MÓVIL (IPHONE 16) === */
+  body, html {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .hero-text h1, .section-head h2 {
+    font-size: clamp(1.6rem, 6.5vw, 2.8rem) !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
+  .hero-text p, .section-head p {
+    font-size: clamp(0.9rem, 3.8vw, 1.05rem) !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
+  .photos-section {
+    padding: 6rem 1rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 3rem;
+    width: 100%;
+  }
+
+  .photo-card {
+    background: rgba(18, 14, 35, 0.7);
+    border: 1px solid rgba(0, 245, 255, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+  .photo-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 245, 255, 0.6);
+    box-shadow: 0 12px 35px rgba(0, 245, 255, 0.2);
+  }
+  .photo-thumb-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .photo-thumb-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .photo-card:hover .photo-thumb-container img {
+    transform: scale(1.06);
+  }
+  .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5, 3, 10, 0.85) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+  @media (hover: none) {
+    .photo-overlay { opacity: 1; }
+  }
+  .photo-card:hover .photo-overlay {
+    opacity: 1;
+  }
+  .photo-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .photo-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #00f5ff;
+    letter-spacing: 0.1em;
+  }
+  .btn-download {
+    background: linear-gradient(135deg, #00f5ff, #a855f7);
+    color: #05030a;
+    border: none;
+    padding: 6px 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.4);
+  }
+
+  /* === LIGHTBOX MODAL === */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(3, 2, 6, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  #lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  #lightbox img {
+    max-width: 92vw;
+    max-height: 78vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 40px rgba(0, 245, 255, 0.3);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+  }
+  .lightbox-close, .lightbox-prev, .lightbox-next {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 245, 255, 0.4);
+    color: #00f5ff;
+    font-size: 1.2rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .lightbox-close { top: 20px; right: 20px; }
+  .lightbox-prev { left: 15px; top: 50%; transform: translateY(-50%); }
+  .lightbox-next { right: 15px; top: 50%; transform: translateY(-50%); }
+  .lightbox-footer {
+    position: absolute;
+    bottom: 20px;
+  }
+</style>
+</head>
+
+<body class="visuals-on">
+
+<!-- PRELOADER 4 SEGUNDOS -->
+<div id="dv-preloader" role="status" aria-label="Cargando El Corte">
+  <div class="dv-loader-rings">
+    <div class="dv-ring-outer"></div>
+    <div class="dv-ring-inner"></div>
+    <svg class="dv-camera-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 21C10 18.7909 11.7909 17 14 17H20.5L23.5 12.5C24.2 11.5 25.3 11 26.5 11H37.5C38.7 11 39.8 11.5 40.5 12.5L43.5 17H50C52.2091 17 54 18.7909 54 21V47C54 49.2091 52.2091 51 50 51H14C11.7909 51 10 49.2091 10 47V21Z" stroke="url(#neonCamGrad)" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="32" cy="34" r="11.5" stroke="#00f5ff" stroke-width="2.5"/>
+      <circle cx="32" cy="34" r="6" stroke="#ff007f" stroke-width="2"/>
+      <circle class="dv-flash-dot" cx="47" cy="23" r="2.5" fill="#00f5ff"/>
+      <defs>
+        <linearGradient id="neonCamGrad" x1="10" y1="11" x2="54" y2="51" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00f5ff"/>
+          <stop offset="0.5" stop-color="#c084fc"/>
+          <stop offset="1" stop-color="#ff007f"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <div class="dv-loader-brand">Daniel Videla Fotografía</div>
+  <div class="dv-loader-sub">El Corte • Gabi</div>
+  <div class="dv-progress-track">
+    <div class="dv-progress-bar"></div>
+  </div>
+</div>
+
+<div class="aura"></div>
+<div class="stars"></div>
+
+<nav class="nav">
+  <div class="logo"><a href="index.html" class="logo">DANIEL VIDELA <span>// FOTOGRAFÍA</span></a></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="sesion.html">Sesión</a></li>
+    <li><a href="tirada.html">Tirada</a></li>
+    <li><a href="familia_amigos.html">Familia y Amigos</a></li>
+  </ul>
+  <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu">
+  <a href="index.html">Inicio</a>
+  <a href="sesion.html">Sesión Principal</a>
+  <a href="tirada.html">Tirada</a>
+  <a href="corte.html">Corte</a>
+  <a href="familia_amigos.html">Familia y Amigos</a>
+  <a href="torta.html">Torta</a>
+  <a href="cena.html">Cena</a>
+</div>
+
+<!-- HERO CON CARRUSEL 3D ORBITAL -->
+<header class="hero">
+  <div class="stage">
+    <div class="parallax">
+      <div class="ring-tilt">
+        <div class="ring" id="ring">
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9295.JPG" alt="Corte 01" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">01</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9300.JPG" alt="Corte 02" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">02</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9309.JPG" alt="Corte 03" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">03</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9320.JPG" alt="Corte 04" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">04</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9330.JPG" alt="Corte 05" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">05</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9340.JPG" alt="Corte 06" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">06</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9360.JPG" alt="Corte 07" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">07</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9383.JPG" alt="Corte 08" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">08</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9400.JPG" alt="Corte 09" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">09</span>CORTE</div></div></div>
+          <div class="panel"><div class="panel-face panel-face--image"><img src="corte/IMG_9422.JPG" alt="Corte 10" loading="lazy"><div class="panel-scrim"></div><div class="panel-cap"><span class="p-num">10</span>CORTE</div></div></div>
+        </div>
+      </div>
+      <div class="hero-text">
+        <div class="eyebrow">DANIEL VIDELA FOTOGRAFÍA</div>
+        <h1>EL CORTE</h1>
+        <p>El cambio de look, las risas cómplices y ese instante único que marca un antes y un después.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- GRILLA FIJA CON LAS 93 FOTOS DE CORTE -->
+<section class="photos-section" id="galeria">
+  <div class="section-head reveal">
+    <div class="eyebrow">// GALERÍA COMPLETA</div>
+    <h2>Ritual y Celebración</h2>
+    <p>Hacé clic en cualquier foto para abrirla en pantalla completa o utilizá el botón para descargarla directamente.</p>
+  </div>
+
+  <div class="photos-grid" id="photosGrid">
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(0)"><img src="corte/IMG_9295.JPG" alt="Corte 1" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 01</span><a href="corte/IMG_9295.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(1)"><img src="corte/IMG_9296.JPG" alt="Corte 2" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 02</span><a href="corte/IMG_9296.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(2)"><img src="corte/IMG_9297.JPG" alt="Corte 3" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 03</span><a href="corte/IMG_9297.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(3)"><img src="corte/IMG_9298.JPG" alt="Corte 4" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 04</span><a href="corte/IMG_9298.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(4)"><img src="corte/IMG_9300.JPG" alt="Corte 5" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 05</span><a href="corte/IMG_9300.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(5)"><img src="corte/IMG_9301.JPG" alt="Corte 6" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 06</span><a href="corte/IMG_9301.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(6)"><img src="corte/IMG_9302.JPG" alt="Corte 7" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 07</span><a href="corte/IMG_9302.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(7)"><img src="corte/IMG_9303.JPG" alt="Corte 8" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 08</span><a href="corte/IMG_9303.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(8)"><img src="corte/IMG_9304.JPG" alt="Corte 9" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 09</span><a href="corte/IMG_9304.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(9)"><img src="corte/IMG_9305.JPG" alt="Corte 10" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 10</span><a href="corte/IMG_9305.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(10)"><img src="corte/IMG_9309.JPG" alt="Corte 11" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 11</span><a href="corte/IMG_9309.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(11)"><img src="corte/IMG_9310.JPG" alt="Corte 12" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 12</span><a href="corte/IMG_9310.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(12)"><img src="corte/IMG_9311.JPG" alt="Corte 13" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 13</span><a href="corte/IMG_9311.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(13)"><img src="corte/IMG_9315.JPG" alt="Corte 14" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 14</span><a href="corte/IMG_9315.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(14)"><img src="corte/IMG_9316.JPG" alt="Corte 15" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 15</span><a href="corte/IMG_9316.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(15)"><img src="corte/IMG_9317.JPG" alt="Corte 16" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 16</span><a href="corte/IMG_9317.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(16)"><img src="corte/IMG_9319.JPG" alt="Corte 17" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 17</span><a href="corte/IMG_9319.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(17)"><img src="corte/IMG_9320.JPG" alt="Corte 18" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 18</span><a href="corte/IMG_9320.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(18)"><img src="corte/IMG_9321.JPG" alt="Corte 19" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 19</span><a href="corte/IMG_9321.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(19)"><img src="corte/IMG_9323.JPG" alt="Corte 20" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 20</span><a href="corte/IMG_9323.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(20)"><img src="corte/IMG_9325.JPG" alt="Corte 21" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 21</span><a href="corte/IMG_9325.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(21)"><img src="corte/IMG_9326.JPG" alt="Corte 22" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 22</span><a href="corte/IMG_9326.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(22)"><img src="corte/IMG_9327.JPG" alt="Corte 23" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 23</span><a href="corte/IMG_9327.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(23)"><img src="corte/IMG_9328.JPG" alt="Corte 24" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 24</span><a href="corte/IMG_9328.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(24)"><img src="corte/IMG_9329.JPG" alt="Corte 25" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 25</span><a href="corte/IMG_9329.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(25)"><img src="corte/IMG_9330.JPG" alt="Corte 26" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 26</span><a href="corte/IMG_9330.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(26)"><img src="corte/IMG_9331.JPG" alt="Corte 27" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 27</span><a href="corte/IMG_9331.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(27)"><img src="corte/IMG_9332.JPG" alt="Corte 28" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 28</span><a href="corte/IMG_9332.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(28)"><img src="corte/IMG_9333.JPG" alt="Corte 29" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 29</span><a href="corte/IMG_9333.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(29)"><img src="corte/IMG_9334.JPG" alt="Corte 30" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 30</span><a href="corte/IMG_9334.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(30)"><img src="corte/IMG_9335.JPG" alt="Corte 31" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 31</span><a href="corte/IMG_9335.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(31)"><img src="corte/IMG_9336.JPG" alt="Corte 32" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 32</span><a href="corte/IMG_9336.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(32)"><img src="corte/IMG_9337.JPG" alt="Corte 33" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 33</span><a href="corte/IMG_9337.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(33)"><img src="corte/IMG_9338.JPG" alt="Corte 34" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 34</span><a href="corte/IMG_9338.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(34)"><img src="corte/IMG_9339.JPG" alt="Corte 35" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 35</span><a href="corte/IMG_9339.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(35)"><img src="corte/IMG_9340.JPG" alt="Corte 36" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 36</span><a href="corte/IMG_9340.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(36)"><img src="corte/IMG_9341.JPG" alt="Corte 37" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 37</span><a href="corte/IMG_9341.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(37)"><img src="corte/IMG_9342.JPG" alt="Corte 38" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 38</span><a href="corte/IMG_9342.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(38)"><img src="corte/IMG_9343.JPG" alt="Corte 39" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 39</span><a href="corte/IMG_9343.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(39)"><img src="corte/IMG_9344.JPG" alt="Corte 40" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 40</span><a href="corte/IMG_9344.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(40)"><img src="corte/IMG_9345.JPG" alt="Corte 41" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 41</span><a href="corte/IMG_9345.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(41)"><img src="corte/IMG_9346.JPG" alt="Corte 42" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 42</span><a href="corte/IMG_9346.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(42)"><img src="corte/IMG_9347.JPG" alt="Corte 43" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 43</span><a href="corte/IMG_9347.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(43)"><img src="corte/IMG_9348.JPG" alt="Corte 44" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 44</span><a href="corte/IMG_9348.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(44)"><img src="corte/IMG_9349.JPG" alt="Corte 45" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 45</span><a href="corte/IMG_9349.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(45)"><img src="corte/IMG_9351.JPG" alt="Corte 46" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 46</span><a href="corte/IMG_9351.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(46)"><img src="corte/IMG_9352.JPG" alt="Corte 47" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 47</span><a href="corte/IMG_9352.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(47)"><img src="corte/IMG_9356.JPG" alt="Corte 48" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 48</span><a href="corte/IMG_9356.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(48)"><img src="corte/IMG_9359.JPG" alt="Corte 49" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 49</span><a href="corte/IMG_9359.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(49)"><img src="corte/IMG_9360.JPG" alt="Corte 50" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 50</span><a href="corte/IMG_9360.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(50)"><img src="corte/IMG_9361.JPG" alt="Corte 51" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 51</span><a href="corte/IMG_9361.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(51)"><img src="corte/IMG_9362.JPG" alt="Corte 52" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 52</span><a href="corte/IMG_9362.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(52)"><img src="corte/IMG_9364.JPG" alt="Corte 53" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 53</span><a href="corte/IMG_9364.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(53)"><img src="corte/IMG_9365.JPG" alt="Corte 54" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 54</span><a href="corte/IMG_9365.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(54)"><img src="corte/IMG_9366.JPG" alt="Corte 55" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 55</span><a href="corte/IMG_9366.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(55)"><img src="corte/IMG_9368.JPG" alt="Corte 56" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 56</span><a href="corte/IMG_9368.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(56)"><img src="corte/IMG_9371.JPG" alt="Corte 57" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 57</span><a href="corte/IMG_9371.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(57)"><img src="corte/IMG_9375.JPG" alt="Corte 58" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 58</span><a href="corte/IMG_9375.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(58)"><img src="corte/IMG_9376.JPG" alt="Corte 59" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 59</span><a href="corte/IMG_9376.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(59)"><img src="corte/IMG_9378.JPG" alt="Corte 60" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 60</span><a href="corte/IMG_9378.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(60)"><img src="corte/IMG_9379.JPG" alt="Corte 61" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 61</span><a href="corte/IMG_9379.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(61)"><img src="corte/IMG_9383.JPG" alt="Corte 62" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 62</span><a href="corte/IMG_9383.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(62)"><img src="corte/IMG_9384.JPG" alt="Corte 63" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 63</span><a href="corte/IMG_9384.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(63)"><img src="corte/IMG_9386.JPG" alt="Corte 64" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 64</span><a href="corte/IMG_9386.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(64)"><img src="corte/IMG_9388.JPG" alt="Corte 65" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 65</span><a href="corte/IMG_9388.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(65)"><img src="corte/IMG_9390.JPG" alt="Corte 66" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 66</span><a href="corte/IMG_9390.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(66)"><img src="corte/IMG_9391.JPG" alt="Corte 67" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 67</span><a href="corte/IMG_9391.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(67)"><img src="corte/IMG_9392.JPG" alt="Corte 68" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 68</span><a href="corte/IMG_9392.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(68)"><img src="corte/IMG_9394.JPG" alt="Corte 69" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 69</span><a href="corte/IMG_9394.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(69)"><img src="corte/IMG_9397.JPG" alt="Corte 70" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 70</span><a href="corte/IMG_9397.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(70)"><img src="corte/IMG_9398.JPG" alt="Corte 71" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 71</span><a href="corte/IMG_9398.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(71)"><img src="corte/IMG_9399.JPG" alt="Corte 72" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 72</span><a href="corte/IMG_9399.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(72)"><img src="corte/IMG_9400.JPG" alt="Corte 73" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 73</span><a href="corte/IMG_9400.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(73)"><img src="corte/IMG_9401.JPG" alt="Corte 74" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 74</span><a href="corte/IMG_9401.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(74)"><img src="corte/IMG_9402.JPG" alt="Corte 75" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 75</span><a href="corte/IMG_9402.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(75)"><img src="corte/IMG_9403.JPG" alt="Corte 76" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 76</span><a href="corte/IMG_9403.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(76)"><img src="corte/IMG_9404.JPG" alt="Corte 77" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 77</span><a href="corte/IMG_9404.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(77)"><img src="corte/IMG_9406.JPG" alt="Corte 78" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 78</span><a href="corte/IMG_9406.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(78)"><img src="corte/IMG_9407.JPG" alt="Corte 79" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 79</span><a href="corte/IMG_9407.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(79)"><img src="corte/IMG_9408.JPG" alt="Corte 80" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 80</span><a href="corte/IMG_9408.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(80)"><img src="corte/IMG_9409.JPG" alt="Corte 81" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 81</span><a href="corte/IMG_9409.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(81)"><img src="corte/IMG_9410.JPG" alt="Corte 82" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 82</span><a href="corte/IMG_9410.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(82)"><img src="corte/IMG_9411.JPG" alt="Corte 83" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 83</span><a href="corte/IMG_9411.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(83)"><img src="corte/IMG_9412.JPG" alt="Corte 84" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 84</span><a href="corte/IMG_9412.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(84)"><img src="corte/IMG_9413.JPG" alt="Corte 85" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 85</span><a href="corte/IMG_9413.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(85)"><img src="corte/IMG_9414.JPG" alt="Corte 86" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 86</span><a href="corte/IMG_9414.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(86)"><img src="corte/IMG_9415.JPG" alt="Corte 87" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 87</span><a href="corte/IMG_9415.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(87)"><img src="corte/IMG_9416.JPG" alt="Corte 88" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 88</span><a href="corte/IMG_9416.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(88)"><img src="corte/IMG_9417.JPG" alt="Corte 89" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 89</span><a href="corte/IMG_9417.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(89)"><img src="corte/IMG_9418.JPG" alt="Corte 90" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 90</span><a href="corte/IMG_9418.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(90)"><img src="corte/IMG_9419.JPG" alt="Corte 91" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 91</span><a href="corte/IMG_9419.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(91)"><img src="corte/IMG_9420.JPG" alt="Corte 92" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 92</span><a href="corte/IMG_9420.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(92)"><img src="corte/IMG_9421.JPG" alt="Corte 93" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 93</span><a href="corte/IMG_9421.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+    <div class="photo-card"><div class="photo-thumb-container" onclick="openLightbox(93)"><img src="corte/IMG_9422.JPG" alt="Corte 94" loading="lazy"><div class="photo-overlay"><div class="photo-actions"><span class="photo-title">CORTE // 94</span><a href="corte/IMG_9422.JPG" download class="btn-download" onclick="event.stopPropagation();">BAJAR</a></div></div></div></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox">
+  <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+  <button class="lightbox-prev" aria-label="Anterior">&#10094;</button>
+  <img id="lightboxImg" src="" alt="Ampliada">
+  <button class="lightbox-next" aria-label="Siguiente">&#10095;</button>
+  <div class="lightbox-footer">
+    <a id="lightboxDownload" href="" download class="btn-download">DESCARGAR FOTO</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="logo"><a href="index.html" class="logo">DANIEL VIDELA <span>// FOTOGRAFÍA</span></a></div>
+  <div class="credit">El Corte • Cumpleaños de Gabi</div>
+</footer>
+
+<script src="tooplate-2167-orbital-script.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    const preloader = document.getElementById('dv-preloader');
+    if (preloader) {
+      setTimeout(() => {
+        preloader.classList.add('is-hidden');
+        setTimeout(() => preloader.remove(), 650);
+      }, 4000);
+    }
+  });
+
+  const photoFiles = [
+    "IMG_9295.JPG", "IMG_9296.JPG", "IMG_9297.JPG", "IMG_9298.JPG", "IMG_9300.JPG",
+    "IMG_9301.JPG", "IMG_9302.JPG", "IMG_9303.JPG", "IMG_9304.JPG", "IMG_9305.JPG",
+    "IMG_9309.JPG", "IMG_9310.JPG", "IMG_9311.JPG", "IMG_9315.JPG", "IMG_9316.JPG",
+    "IMG_9317.JPG", "IMG_9319.JPG", "IMG_9320.JPG", "IMG_9321.JPG", "IMG_9323.JPG",
+    "IMG_9325.JPG", "IMG_9326.JPG", "IMG_9327.JPG", "IMG_9328.JPG", "IMG_9329.JPG",
+    "IMG_9330.JPG", "IMG_9331.JPG", "IMG_9332.JPG", "IMG_9333.JPG", "IMG_9334.JPG",
+    "IMG_9335.JPG", "IMG_9336.JPG", "IMG_9337.JPG", "IMG_9338.JPG", "IMG_9339.JPG",
+    "IMG_9340.JPG", "IMG_9341.JPG", "IMG_9342.JPG", "IMG_9343.JPG", "IMG_9344.JPG",
+    "IMG_9345.JPG", "IMG_9346.JPG", "IMG_9347.JPG", "IMG_9348.JPG", "IMG_9349.JPG",
+    "IMG_9351.JPG", "IMG_9352.JPG", "IMG_9356.JPG", "IMG_9359.JPG", "IMG_9360.JPG",
+    "IMG_9361.JPG", "IMG_9362.JPG", "IMG_9364.JPG", "IMG_9365.JPG", "IMG_9366.JPG",
+    "IMG_9368.JPG", "IMG_9371.JPG", "IMG_9375.JPG", "IMG_9376.JPG", "IMG_9378.JPG",
+    "IMG_9379.JPG", "IMG_9383.JPG", "IMG_9384.JPG", "IMG_9386.JPG", "IMG_9388.JPG",
+    "IMG_9390.JPG", "IMG_9391.JPG", "IMG_9392.JPG", "IMG_9394.JPG", "IMG_9397.JPG",
+    "IMG_9398.JPG", "IMG_9399.JPG", "IMG_9400.JPG", "IMG_9401.JPG", "IMG_9402.JPG",
+    "IMG_9403.JPG", "IMG_9404.JPG", "IMG_9406.JPG", "IMG_9407.JPG", "IMG_9408.JPG",
+    "IMG_9409.JPG", "IMG_9410.JPG", "IMG_9411.JPG", "IMG_9412.JPG", "IMG_9413.JPG",
+    "IMG_9414.JPG", "IMG_9415.JPG", "IMG_9416.JPG", "IMG_9417.JPG", "IMG_9418.JPG",
+    "IMG_9419.JPG", "IMG_9420.JPG", "IMG_9421.JPG", "IMG_9422.JPG"
+  ];
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxDownload = document.getElementById('lightboxDownload');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const prevBtn = document.querySelector('.lightbox-prev');
+  const nextBtn = document.querySelector('.lightbox-next');
+
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightboxImage();
+    lightbox.classList.add('is-open');
+  }
+
+  function updateLightboxImage() {
+    const filename = photoFiles[currentIndex];
+    const path = `corte/${filename}`;
+    lightboxImg.src = path;
+    lightboxDownload.href = path;
+    lightboxDownload.setAttribute('download', filename);
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + photoFiles.length) % photoFiles.length;
+    updateLightboxImage();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % photoFiles.length;
+    updateLightboxImage();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevBtn.click();
+    if (e.key === 'ArrowRight') nextBtn.click();
+  });
+</script>
+
+</body>
+</html>
